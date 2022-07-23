@@ -7,6 +7,7 @@ public:
         for(int i=0; i<nums.size(); i++){
             m[nums[i]]++;
         }
+        //make minheap of map
         priority_queue<pair<int,int>> q;
         for(auto [a,b] : m){
             
