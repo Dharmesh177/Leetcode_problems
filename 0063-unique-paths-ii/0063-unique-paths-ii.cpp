@@ -10,7 +10,7 @@ public:
         if(i<0 || j<0){
             return 0;
         }
-        if(dp[i][j]!=0)
+        if(dp[i][j]!=-1)
             return dp[i][j];
         
        int  up=f(i-1,j,a,dp);
@@ -20,7 +20,7 @@ public:
     int uniquePathsWithObstacles(vector<vector<int>>& a) {
         int m= a.size();
         int n=a[0].size();
-        vector<vector<int>> dp(m,vector<int>(n,0));
+        vector<vector<int>> dp(m,vector<int>(n,-1));
         return f(m-1,n-1,a,dp);
         
     }
