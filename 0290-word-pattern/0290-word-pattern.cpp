@@ -1,8 +1,7 @@
-#include<bits/stdc++.h>
 class Solution {
 public:
     bool wordPattern(string pattern, string s) {
-        vector<string> v;
+         vector<string> v;
         // word variable to store word in the string s
         string word;
         // making a string stream
