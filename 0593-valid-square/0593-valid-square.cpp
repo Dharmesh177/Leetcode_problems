@@ -17,7 +17,42 @@ public:
         return res;
     }
     bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
-        vector<vector<int>> points = {p1, p2, p3, p4};
+//         vector<vector<int>> v;
+//         v.push_back(p1);
+//          v.push_back(p2);
+//          v.push_back(p3);
+//          v.push_back(p4);
+        
+//         sort(v.begin(),v.end());
+        
+//         vector<int> a,b,c,d;
+//         a=v[0];
+//         b=v[1];
+//         c=v[2];
+//         d=v[3];
+        
+//         int s1=distfind(a,b);
+//         int s2=distfind(c,d);
+//         int s3=distfind(a,c);
+//         int s4=distfind(b,d);
+        
+//         // if(s1!=s2 || s2!=s3 || s3!=s4 || s4!=s1) return false;
+        
+        
+//         int m1=slopeh(a,b);
+//         int m2=slopeh(c,d);
+//         int m3=slopeh(a,c);
+//         int m4=slopeh(b,d);
+        
+//         // if(m1!=m2 || m2!=m3 || m3!=m4 || m4!=m1) return false;
+//         // return true;
+//         if(s1==s2 && s2==s3 && s3==s4 && s4==s1 && m1==m2 && m2==m3 && m3==m4 && m4==m1)
+//         {
+//             return true;
+//         }     
+//         return false;
+        
+         vector<vector<int>> points = {p1, p2, p3, p4};
         
         unordered_map<int, int> cnt;
         
