@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //TC -> O(nlogn) SC -> O(n)
     int findMaximizedCapital(int k, int w, vector<int>& profits, vector<int>& capital) {
         int n=profits.size();
     vector<pair<int,int>> projects(n);
