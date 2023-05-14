@@ -1,35 +1,29 @@
-class Solution {
+class Solution { // 58 ms, faster than 94.74%
 public:
-   int solve(vector<int>&nums,  unordered_map<vector<bool>, int>&mp, vector<bool>&visited, int operation)
-    {
-        if (mp.count(visited)) return mp[visited]; //use stored result
-            
-        int maxScore = 0;
-        for (int i = 0; i < nums.size() - 1; i++)
-        {
-            if (visited[i]) continue;
-            for (int j = i + 1; j < nums.size(); j++)
-            {
-                if (visited[j]) continue;
-                visited[i] = true;
-                visited[j] = true;
-                //=====================================================================
-                int currScore = operation * __gcd(nums[i], nums[j]);
-                int nextMaxScore = solve(nums, mp, visited, operation + 1);
-                int totalScore = currScore + nextMaxScore;
-                maxScore = max(maxScore, totalScore);
-                //======================================================================
-                visited[i] = false;
-                visited[j] = false;
+    int gcdMemo[14][14] = {};
+    int memo[1 << 14] = {};
+    int m, n;
+    int maxScore(vector<int>& nums) {
+        m = nums.size(), n = m / 2;
+        return dp(nums, 1, 0);
+    }
+    int dp(vector<int>& nums, int op, int mask) {
+        if (op > n) return 0; // Reach to n operations
+        if (memo[mask] != 0) return memo[mask];
+
+        for (int i = 0; i < m; ++i) {
+            if ((mask >> i) & 1) continue; // If nums[i] is used -> Skip
+            for (int j = i + 1; j < m; ++j) {
+                if ((mask >> j) & 1) continue; // If nums[i] is used -> Skip
+                int newMask = (1 << i) | (1 << j) | mask; // Mark nums[i] and nums[i] as used!
+                int score = op * gcd(nums, i, j) + dp(nums, op + 1, newMask);
+                memo[mask] = max(memo[mask], score);
             }
         }
-        return mp[visited] = maxScore; //store the result
+        return memo[mask];
     }
-    int maxScore(vector<int>& nums) {
-        int n=nums.size();
-        vector<bool>visited(n,false);
-        unordered_map<vector<bool>,int> mp;
-        int ans=solve(nums,mp,visited,1);
-        return ans;
+    int gcd(vector<int>& nums, int i, int j) { // gcd with cache
+        if (gcdMemo[i][j] != 0) return gcdMemo[i][j];
+        return gcdMemo[i][j] = __gcd(nums[i], nums[j]);
     }
 };
