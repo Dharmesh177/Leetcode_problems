@@ -1,41 +1,41 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int, int>>> graph(n);
-        for(auto e : flights) {
-            graph[e[0]].push_back({e[1], e[2]});
+       
+       int m=flights[0].size();
+        
+        vector<pair<int, int>> adj[n];
+        for (auto it : flights)
+        {
+            adj[it[0]].push_back({it[1], it[2]});
         }
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
-        // {dist_from_src_node, node, number_of_stops_from_src_node}
-        pq.push({0, src, 0});
+     
+       queue<pair<int,pair<int,int>>> q;
+        q.push({0,{src,0}});
+        vector<int> dist(n,1e9);
+        dist[src]=0;
         
-        vector<int> stops(n, INT_MAX);
-        // number of stops to reach indexth node with least possible price from src node
-        // as it will be calculated once the pq.top() equals to indexth node
-        
-        // pq.top() will always store least cost among the pq elements so if already stop is calculated
-        // and if that is greater than the cstop that means already we have a path with cheaper cost
-        // as well as with less or equal number of stops
-        
-        while(!pq.empty()) {
-            auto temp=pq.top();
-            int cdist=temp[0];
-            int cnode=temp[1];
-            int cstop=temp[2];
-            pq.pop();
+        while(!q.empty()){
+            auto x = q.front();
+            q.pop();
+            int stop = x.first;
+            int node = x.second.first;
+            int dis = x.second.second;
             
-            if(cstop>stops[cnode] || cstop>k+1)
+            if(stop > k)
                 continue;
-            
-            stops[cnode]=cstop;
-            if(cnode==dst) {
-                return cdist;
-            }
-            
-            for(auto a : graph[cnode]) {
-                pq.push({cdist+a.second, a.first, cstop+1});
+            for(auto it:adj[node]){
+                int dsc = it.first;
+                int edW = it.second;
+                
+                if(dis + edW < dist[dsc] && stop <=k){
+                    dist[dsc] = dis + edW;
+                    q.push({stop +1,{dsc,dist[dsc]}});
+                }
             }
         }
-        return -1;
+        if (dist[dst] == 1e9)
+            return -1;
+        return dist[dst];
     }
 };
